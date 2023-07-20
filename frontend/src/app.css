@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.container {
+	width: 70%;
+	margin: 0 auto;
+}
+
+/* HEAD & CONTENT */
+.container > .head,
+.content {
+	padding: 0 30px;
+}
+
+/* HEAD */
+.container > .head h2 {
+	font-size: 24px;
+	font-weight: 600;
+	color: darkslategray;
+	margin-left: 10px;
+	font-style: italic;
+	display: inline-block;
+	border-bottom: 1px solid darkslategray;
+}
