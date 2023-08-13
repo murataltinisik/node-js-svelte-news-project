@@ -5,7 +5,7 @@ const server = require('../../app');
 const { LocalStorage } = require('node-localstorage');
 
 chai.use(chaiHttp);
-let token, user_id = "648da51b910e6c1f58c7799a";
+let token, user_id = "64b9547b4ddff0d252643c2c";
 let new_pass = Math.random() + "";
 localStorage = new LocalStorage('./scratch');
 

@@ -49,7 +49,7 @@ describe("NEWS TESTS", () => {
                 content: "News Content Test",
                 image: "News Image Test",
                 tag: "News Tag Test",
-                author_id: "648da51b910e6c1f58c7799a" // This is a id in users collections.
+                author_id: "64b9547b4ddff0d252643c2c" // This is a id in users collections.
             }).end((err, res) => {
                 if(err){
                     throw err;

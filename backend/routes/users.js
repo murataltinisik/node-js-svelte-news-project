@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 
+// MIDDLEWARE
+const verifyToken = require('../middleware/verify-token');
+
 // MODEL
 const UserModel = require('../models/Users');
 
@@ -83,7 +86,7 @@ router.get('/:author_id', (req, res) => {
 });
 
 // BE WRITER
-router.put('/be-writer/:user_id', (req, res) => {
+router.put('/be-writer/:user_id', verifyToken, (req, res) => {
     const user_id = req.params.user_id;
 
     UserModel.findById(user_id).then(data => {
@@ -107,7 +110,7 @@ router.put('/be-writer/:user_id', (req, res) => {
 });
 
 // DON'T BE WRITER
-router.put('/dont-be-writer/:user_id', (req, res) => {
+router.put('/dont-be-writer/:user_id', verifyToken, (req, res) => {
     const user_id = req.params.user_id;
 
     UserModel.findById(user_id).then(data => {

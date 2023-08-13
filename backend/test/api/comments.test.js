@@ -5,8 +5,8 @@ const server = require('../../app');
 
 chai.use(chaiHttp);
 let token,
-    user_id = "648da51b910e6c1f58c7799a",
-    news_id = "648da545910e6c1f58c779a2",
+    user_id = "64b9547b4ddff0d252643c2c",
+    news_id = "64bd402421ee2a23a0f8944b",
     added_comment_id;
 
 describe("COMMENTS TESTS", () => {

@@ -1,17 +1,23 @@
 <script>
+	import {onMount} from "svelte";
+
 	import '../app.css'
 	import { page } from '$app/stores'
   	import Fa from 'svelte-fa';
 	import { faSearch } from '@fortawesome/free-solid-svg-icons'
   	import Title from './Title.svelte';
-	import {onMount} from "svelte";
 
+	// FOR REQUEST
+	import axios from "axios";
+	import { API_URL } from "$lib/env.js";
+
+	// OPEN MENU
 	let isOpenMenu = false;
 
-	let isLoading = false;
-	// IS AUTHENTICATE
-	let isAuthenticate = false;
+	// VARIABLES
 	let userdata;
+	let isLoading = false;
+	let isAuthenticate = false;
 
 	onMount(() => {
 		if(sessionStorage.getItem('user_data')){
@@ -21,7 +27,29 @@
 		isLoading = true;
 	});
 
-	// VARIABLES
+	// SIGN OUT
+	const onSignOut = () => {
+		// SESSION STORAGE
+		sessionStorage.removeItem('user_data');
+		window.location.reload();
+	}
+
+	// ON BE WRITER
+	const onBeWriter = async () => {
+		const { user_id, token } = userdata;
+
+		await axios.put(`${API_URL}/users/be-writer/${user_id}?token=${token}`).then(response => {
+			if(response.data.code === 200){
+				userdata.role = 1;
+				sessionStorage.setItem('user_data', JSON.stringify(userdata));
+				window.location.reload();
+			}
+		}).catch(error => {
+			console.log(error);
+		});
+	}
+
+	// ACTIVE LINKS
 	const activeLink = "md:bg-transparent md:text-red-500 dark:text-white md:dark:text-red-500";
 </script>
 
@@ -123,7 +151,7 @@
 							<a href="/profile" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Profile</a>
 						</li>
 						<li>
-							<a href="/" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
+							<a href="/" on:click={onSignOut} class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
 						</li>
 					</ul>
 				</div>
@@ -131,9 +159,11 @@
 		</div>
 	</div>
 
-	<button type="button" class="text-gray-900 fixed bottom-8 left-8 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-		Be a Writer
-	</button>
+	{#if isAuthenticate && userdata.role === 0}
+		<button type="button" on:click={onBeWriter} class="text-gray-900 fixed bottom-8 left-8 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+			Be a Writer
+		</button>
+	{/if}
 </nav>
 
 <style lang="scss">

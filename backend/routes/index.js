@@ -78,7 +78,7 @@ router.post('/signin', (req, res) => {
     res.json({ message: "Password field is require!", code: -1 });
   }else{
     // EXISTS USER
-    const promise = UserModel.findOne({ email }, '_id email password');
+    const promise = UserModel.findOne({ email }, '_id email password role');
 
     promise.then((data) => {
       if(!data){
@@ -95,7 +95,7 @@ router.post('/signin', (req, res) => {
                     expiresIn: 3600
                 });
 
-                res.json({ message: "Login Successfully.", token, user_id: data._id, code: 200 });
+                res.json({ message: "Login Successfully.", token, user_id: data._id, role: data.role, code: 200 });
             }).catch(err => {
                 res.json(err);
             });

@@ -39,11 +39,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // PATH ROUTES
 app.use('/', indexRouter);
-app.use('/api', verifyToken);
 app.use('/api/news', newsRouter);
 app.use('/api/users', usersRouter);
-app.use('/api/profile', profileRouter);
-app.use('/api/comments', commentsRouter);
+app.use('/api/profile', verifyToken, profileRouter);
+app.use('/api/comments', verifyToken, commentsRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

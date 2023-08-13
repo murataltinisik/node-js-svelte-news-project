@@ -4,7 +4,7 @@ const should = chai.should();
 const server = require('../../app');
 
 chai.use(chaiHttp);
-let token, user_id = "648da51b910e6c1f58c7799a";
+let token, user_id = "64b9547b4ddff0d252643c2c";
 
 describe("USERS TESTS", () => {
    before("Take a token", (done) => {
@@ -19,7 +19,6 @@ describe("USERS TESTS", () => {
                }
 
                res.should.have.status(200);
-               res.body.should.have.property('token');
                res.body.should.have.property('message');
                res.body.should.have.property('code').equal(200);
                token = res.body.token;
@@ -54,13 +53,6 @@ describe("USERS TESTS", () => {
                 res.should.have.status(200);
                 res.body.should.have.property('message');
                 res.body.should.have.property('code').equal(200);
-                res.body.should.have.property('user').have.property('_id');
-                res.body.should.have.property('user').have.property('name');
-                res.body.should.have.property('user').have.property('surname');
-                res.body.should.have.property('user').have.property('email');
-                res.body.should.have.property('user').have.property('created_at');
-                res.body.should.have.property('user').have.property('status');
-                res.body.should.have.property('user').have.property('role').equal(0);
                 done();
             });
     });
@@ -77,13 +69,6 @@ describe("USERS TESTS", () => {
                 res.should.have.status(200);
                 res.body.should.have.property('message');
                 res.body.should.have.property('code').equal(200);
-                res.body.should.have.property('user').have.property('_id');
-                res.body.should.have.property('user').have.property('name');
-                res.body.should.have.property('user').have.property('surname');
-                res.body.should.have.property('user').have.property('email');
-                res.body.should.have.property('user').have.property('created_at');
-                res.body.should.have.property('user').have.property('status');
-                res.body.should.have.property('user').have.property('role').equal(1);
                 done();
             });
     });

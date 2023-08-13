@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
-const app = express();
 
 // MODEL
 const NewsModel = require('../models/News');
@@ -80,6 +79,7 @@ router.get('/:news_id', (req, res) => {
                     },
                     author: {
                         $first: {
+                            _id: '$author._id',
                             name: '$author.name',
                             surname: '$author.surname',
                             email: '$author.email',

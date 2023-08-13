@@ -61,6 +61,7 @@
                 if(response.data.token){
                     sessionStorage.setItem('user_data', JSON.stringify({
                         email: fields.email,
+                        role: 0,
                         token: response.data.token,
                         user_id: response.data.user_id
                     }));
