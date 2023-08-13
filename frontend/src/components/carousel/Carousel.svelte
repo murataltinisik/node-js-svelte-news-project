@@ -27,7 +27,7 @@
     <div class="carousel-items" bind:this={carouselItem}>
         {#each items as item}
             <div class="carousel-item">
-                <NormalCard title="Lorem ipsum dolor." description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s." />
+                <NormalCard title={item.title.substring(0, 20)} description={item.content} link={`/news/${item._id}`} />
             </div>
         {/each}
     </div>

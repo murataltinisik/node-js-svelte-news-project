@@ -24,6 +24,11 @@ router.get('/', (req, res) => {
             }
         },
         {
+            $sort: {
+                'created_at': -1
+            }
+        },
+        {
             $project: {
                 title: '$title',
                 content: '$content',
@@ -43,6 +48,25 @@ router.get('/', (req, res) => {
     }).catch(err => {
         res.json(err);
     })
+});
+
+// GET DYNAMIC LIMITED DATA
+router.get('/:limit/get', (req, res) => {
+    const limit = req.params.limit;
+
+    if(limit === 4){
+        NewsModel.find().sort({ 'created_at': -1 }).limit(limit).then(data => {
+            res.json(data);
+        }).catch(err => {
+            console.log(err);
+        });
+    }else{
+        NewsModel.find().sort({ 'created_at': -1 }).skip(4).limit(limit).then(data => {
+            res.json(data);
+        }).catch(err => {
+            console.log(err);
+        });
+    }
 });
 
 // GET ONCE

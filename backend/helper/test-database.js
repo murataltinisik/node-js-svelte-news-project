@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 module.exports = () => {
-    mongoose.connect('mongodb+srv://altinisikmurat396:f5thwOLPSkkjoTGs@cluster0.olxgoo1.mongodb.net/test');
+    mongoose.connect('mongodb+srv://adminappuser:HnkuF3vvq1h9Zam4@cluster0.q1ku9um.mongodb.net/test');
 
     mongoose.connection.once('open', () => {
         console.log("MongoDb Test connected successfully!!!");

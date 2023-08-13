@@ -40,11 +40,6 @@
 
     <!-- CONTENT -->
     <div class="content">
-        <!-- SEARCH -->
-        <div class="search">
-            <Input name="search-news" placeholder="Search News..." icon={faSearch} button="Search"/>
-        </div>
-
         <!-- BODY -->
         <div class="body">
             <!-- RIGHT -->

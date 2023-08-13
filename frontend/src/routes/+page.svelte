@@ -1,8 +1,41 @@
 <script>
+	// onmount
+	import { onMount } from "svelte";
+
 	import News from '../components/cards/news/News.svelte';
-  import Carousel from '../components/carousel/Carousel.svelte';
-  import Footer from '../global/Footer.svelte';
+  	import Carousel from '../components/carousel/Carousel.svelte';
+  	import Footer from '../global/Footer.svelte';
 	import Navbar from '../global/Navbar.svelte';
+
+	// AXIOS
+	import axios from "axios";
+
+	// API URL
+	import { API_URL } from "$lib/env.js";
+	import {data} from "autoprefixer";
+
+	// VARIABLES
+	let dataLimit4;
+	let dataLimit7;
+
+	onMount(async () => {
+		// FOR DATA LIMIT (4)
+		await axios.get(`${API_URL}/news/4/get`)
+				.then(data => {
+					dataLimit4 = data.data
+				}).catch(err => {
+					console.log(err);
+				});
+
+		// FOR DATA LIMIT (7)
+		await axios.get(`${API_URL}/news/7/get`)
+				.then(data => {
+					dataLimit7 = data.data
+				}).catch(err => {
+					console.log(err);
+				});
+	});
+
 </script>
 
 <!-- CONTAINER -->
@@ -21,60 +54,69 @@
 		<div class="news-container">
 			<!-- LEFT -->
 			<div class="left">
-				<div class="box">
-					<News
-						title="Lorem Ipsum is simply dummy"
-						description="It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English."
-						image={{ src:'https://ichef.bbc.co.uk/wwhp/624/cpsprodpb/0D70/production/_130004430_4c788ce24db4609f6e8a55354db4c8b1a91ecdd7.jpg', alt:'', title:''}}
-						tag="Europe"
-					/>
-				</div>
+				{#if dataLimit4 && dataLimit4[0]}
+					<div class="box">
+						<News
+							title={dataLimit4[0].title}
+							description={dataLimit4[0].content}
+							image={{ src: dataLimit4[0].image, alt:'', title:''}}
+							tag={dataLimit4[0].tag}
+							link={`/news/${dataLimit4[0]._id}`}
+						/>
+					</div>
+				{/if}
 			</div>
 
 			<!-- RIGHT -->
 			<div class="right">
+				{#if dataLimit4 && dataLimit4[1] && dataLimit4[2]}
 				<!-- BOX -->
 				<div class="box">
 					<div>
 						<News
-							title="Lorem ipsum dolor"
-							image={{ src:'https://ichef.bbc.co.uk/wwhp/304/cpsprodpb/7211/production/_130010292_dam.jpg', alt:'', title:''}}
-							description="ry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled"
-							size="sm"
-							tag="Holiday"
+								title={dataLimit4[1].title}
+								description={dataLimit4[1].content}
+								image={{ src: dataLimit4[1].image, alt:'', title:''}}
+								tag={dataLimit4[1].tag}
+								link={`/news/${dataLimit4[1]._id}`}
 						/>
 					</div>
 
 					<div>
 						<News
-							title="Lorem ipsum dolor"
-							image={{ src:'https://ichef.bbc.co.uk/wwhp/304/cpsprodpb/1555D/production/_126898378_gettyimages-1423195630.jpg', alt:'', title:'' }}
-							description="ry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled"
-							size="sm"
-							tag="Sport"
+								title={dataLimit4[2].title}
+								description={dataLimit4[2].content}
+								image={{ src: dataLimit4[2].image, alt:'', title:''}}
+								tag={dataLimit4[2].tag}
+								link={`/news/${dataLimit4[2]._id}`}
 						/>
 					</div>
 				</div>
+				{/if}
 
+				{#if dataLimit4 && dataLimit4[3]}
 				<!-- BOX -->
 				<div class="box">
 					<div>
 						<News
-							title="Lorem Ipsum dummy text of the printing"
-							description="ers, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and w"
-							image={{ src:'https://ichef.bbci.co.uk/news/976/cpsprodpb/E359/production/_130010285_prigozhin.jpg.webp', alt:'', title:''}}
-							size="md"
-							tag="War"
+								title={dataLimit4[3].title}
+								description={dataLimit4[3].content}
+								image={{ src: dataLimit4[3].image, alt:'', title:''}}
+								tag={dataLimit4[3].tag}
+								link={`/news/${dataLimit4[3]._id}`}
 						/>
 					</div>
 				</div>
+				{/if}
 			</div>
 		</div>
 
+		{#if dataLimit7}
 		<!-- CAROUSEL -->
 		<div class="carousel-container">
-			<Carousel items={[0,1,2,3,4,5,6,7]}/>
+			<Carousel items={dataLimit7}/>
 		</div>
+		{/if}
 	</div>
 
 	<!-- FOOTER -->
